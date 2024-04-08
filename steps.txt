@@ -1,0 +1,8 @@
+1- Criando projeto
+dotnet new mvc -o NanniFlix
+
+2 - Criando solução
+dotnet new sln --name NanniFlix
+
+3 - Incluir na solução o projeto
+dotnet sln add NanniFlix\NanniFlix.csproj
