@@ -8,7 +8,7 @@ namespace NanniFlix.Models;
 public class MovieGenre
 {
     [Key, Column(Order = 1)]
-    public int MovieID { get; set; }
+    public uint MovieID { get; set; }
     [ForeignKey("MovieId")]
     public Movie Movie { get; set; }
 

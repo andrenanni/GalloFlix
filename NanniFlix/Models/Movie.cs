@@ -8,7 +8,7 @@ public class Movie
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public uint Id { get; set; }
     
     [Display(Name = "Titulo Original")]
     [Required(ErrorMessage = "Favor informar o Titulo Original")]
@@ -45,4 +45,6 @@ public class Movie
     public string HourDuration { get{
         return TimeSpan.FromMinutes(Duration).ToString(@"%h'h 'mm");
     } }
+
+    public ICollection<MovieGenre> Genres { get; set; }
 }
