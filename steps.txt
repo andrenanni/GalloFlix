@@ -6,3 +6,26 @@ dotnet new sln --name NanniFlix
 
 3 - Incluir na solução o projeto
 dotnet sln add NanniFlix\NanniFlix.csproj
+
+abrir NugetGallery (shift + ctrl + p)
+    Pesquisar e instalar:
+        EntityFrameworkCore
+        EntityFrameworkCore.Design
+        EntityFrameworkCore.Tools
+        Pomelo.EntityFrameworkCore.MySql
+
+Criar as classes de dados - Pasta Models
+
+Criar a pasta Data e a classe AppDbContext
+
+Criar a ConnectionString no arquivo appsettings.json
+
+Criar o serviço de conexão no arquivo Porgram.cs
+
+dotnet tool install -g dotnet-aspnet-codegenerator --version 8.0.1
+
+Pacotes para CRUD
+    Microsoft.VisualStudio.Web.CodeGeneration.Design
+
+Criar um controller CRUD - CREATE READ UPDATE DELETE
+    dotnet-aspnet-codegenerator controller -name GenresController -m Genre -dc AppDbContext -outDir controller -udl
