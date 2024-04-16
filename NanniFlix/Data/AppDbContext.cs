@@ -10,7 +10,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Genre> Genres { get; set; }
-    public DbSet<Movie> Movie { get; set; }
+    public DbSet<Movie> Movies { get; set; }
     public DbSet<MovieGenre> MovieGenres { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -19,12 +19,12 @@ public class AppDbContext : DbContext
 
         #region Configuração do Muitos para muitos do MovieGenre
         builder.Entity<MovieGenre>().HasKey(
-            mg => new { mg.MovieID, mg.Genre }
+            mg => new { mg.MovieId, mg.Genre }
         );
         builder.Entity<MovieGenre>()
             .HasOne(mg => mg.Movie)
             .WithMany(m => m.Genres)
-            .HasForeignKey(mg => mg.MovieID);
+            .HasForeignKey(mg => mg.MovieId);
 
         builder.Entity<MovieGenre>()
             .HasOne(mg => mg.Genre)
