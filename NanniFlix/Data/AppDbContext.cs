@@ -19,7 +19,7 @@ public class AppDbContext : DbContext
 
         #region Configuração do Muitos para muitos do MovieGenre
         builder.Entity<MovieGenre>().HasKey(
-            mg => new { mg.MovieId, mg.Genre }
+            mg => new { mg.MovieId, mg.GenreId }
         );
         builder.Entity<MovieGenre>()
             .HasOne(mg => mg.Movie)
