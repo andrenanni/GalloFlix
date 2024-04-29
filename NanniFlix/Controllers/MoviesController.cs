@@ -62,10 +62,11 @@ namespace NanniFlix.Controllers
             {
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
-                
-                if (arquivo != null){
+
+                if (arquivo != null)
+                {
                     string nomeArquivo = movie.Id + Path.GetExtension(arquivo.FileName);
-                    string caminho = Path.Combine(_host.WebRootPath,"img\\movies");
+                    string caminho = Path.Combine(_host.WebRootPath, "img\\movies");
                     string novoArquivo = Path.Combine(caminho, nomeArquivo);
                     using (var stream = new FileStream(novoArquivo, FileMode.Create))
                     {
@@ -101,7 +102,7 @@ namespace NanniFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(uint id, [Bind("Id,OriginalTitle,Title,Synopsis,MovieYear,Duration,AgeRating,Image")] Movie movie)
+        public async Task<IActionResult> Edit(uint id, [Bind("Id,OriginalTitle,Title,Synopsis,MovieYear,Duration,AgeRating,Image")] Movie movie, IFormFile arquivo)
         {
             if (id != movie.Id)
             {
@@ -112,8 +113,25 @@ namespace NanniFlix.Controllers
             {
                 try
                 {
-                    _context.Update(movie);
-                    await _context.SaveChangesAsync();
+                    if (ModelState.IsValid)
+                    {
+                        _context.Add(movie);
+                        await _context.SaveChangesAsync();
+
+                        if (arquivo != null)
+                        {
+                            string nomeArquivo = movie.Id + Path.GetExtension(arquivo.FileName);
+                            string caminho = Path.Combine(_host.WebRootPath, "img\\movies");
+                            string novoArquivo = Path.Combine(caminho, nomeArquivo);
+                            using (var stream = new FileStream(novoArquivo, FileMode.Create))
+                            {
+                                arquivo.CopyTo(stream);
+                            }
+                            movie.Image = "\\img\\movies\\" + nomeArquivo;
+                            await _context.SaveChangesAsync();
+                        }
+                        _context.Update(movie);
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
