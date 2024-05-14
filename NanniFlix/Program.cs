@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NanniFlix.Data;
 
@@ -9,6 +10,12 @@ builder.Services.AddControllersWithViews();
 string conn = builder.Configuration.GetConnectionString("NanniFlix");
 var version = ServerVersion.AutoDetect(conn);
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseMySql(conn, version));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(
+    opt => opt.SignIn.RequireConfirmedAccount = false
+)
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -26,6 +33,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
