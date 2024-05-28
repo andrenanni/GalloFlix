@@ -75,7 +75,8 @@ public class AccountController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Logout(){
+    public async Task<IActionResult> Logout()
+    {
         _logger.LogInformation($"Usúario {ClaimTypes.Email} saiu do sistema");
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
@@ -92,5 +93,11 @@ public class AccountController : Controller
         {
             return false;
         }
+    }
+    public IActionResult Register()
+    {
+        RegisterVM registerVM = new();
+
+        return View(registerVM);
     }
 }
